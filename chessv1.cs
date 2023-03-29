@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-//this is the general peice class, this is inherated by other peices so that all the peices can be kept in a general list to operate on.
 public class peice
 {
     //each peice has a color, type, id, the column and row, a list of moves they can take, and output for thier moves, and lastly actually doing those moves
@@ -23,214 +22,328 @@ public class peice
         return moves;
     }
     
-    public virtual void allowed_moves(int move, int direction){} 
+    public bool contains_move(int move)
+    {
+        return moves.Contains(move);
+    }
+    
+    public virtual int allowed_moves(int move){ return 1;} 
     
     public virtual void output_moves(){} 
+    
+    
 }
 
 public class castle:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
-        if(move == 1)
+        
+        if(move == 1)//up
         {
-            row += direction;
+            return 8;
         }
-        else if(move ==2)
+        else if(move == 2)//down
         {
-            column += direction;
+            return - 8;
         }
+        else if(move == 3)//right
+        {
+            return 1;
+        }
+        else if(move ==4)//left
+        {
+            return -1;
+        }
+        
+        return 0;
     }
     
     public override void output_moves()
     {
-        Console.WriteLine("1.Move horizontally.");
-        Console.WriteLine("2.Move vertically");
+        Console.WriteLine("1.Move the peice up the file.");
+        Console.WriteLine("2.Move the peice down the file");
+        Console.WriteLine("3.Move the peice to the right.");
+        Console.WriteLine("4.Move move the peice to the left.");
     }
 }
 
 public class bishop:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
         
-        if(move ==3)
+        if(move ==5)//move to the up and right.
         {
-            row += direction;
-		    column += direction;
+            return 9;
         }
-        else if(move == 4)
+        else if(move == 6)//move the the down and left
         {
-            row -= direction;
-		    column += direction;
+            return -9;
         }
+        if(move ==7)//move to the down  and right.
+        {
+		return -7;
+        }
+        else if(move == 8)//move to the up and left
+        {
+            return 7;
+        }
+        return 0;
     }
     
     public override void output_moves()
     {
-        Console.WriteLine("3.Move diagnolly to the right and up or diagnolly to the left and down.");
-        Console.WriteLine("4.move diagnolly to the right and down or diagnolly to the left and up");
+        Console.WriteLine("5.Move diagnolly to the up and right.");
+        Console.WriteLine("6.move diagnolly to the down and left.");
+        Console.WriteLine("7.Move diagnolly to the down and right.");
+        Console.WriteLine("8.move diagnolly to the up and left.");
         
     }
 }
 
 public class queen:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
-        if(move == 1)
+        if(move == 1)//up
         {
-            row += direction;
+            return 8;
         }
-        else if(move ==2)
+        else if(move == 2)//down
         {
-            column += direction;
+            return -8;
+        }
+        else if(move == 3)//right
+        {
+            return 1;
+        }
+        else if(move ==4)//left
+        {
+            return -1;
         }
         
-        else if(move ==3)
+        if(move ==5)//move to the up and right.
         {
-            row += direction;
-		    column += direction;
+            return 9;
         }
-        else if(move == 4)
+        else if(move == 6)//move the the down and left
         {
-            row -= direction;
-		    column += direction;
+            return -9;
+	
         }
+        if(move ==7)//move to the down  and right.
+        {
+            return -7;
+        }
+        else if(move == 8)//move to the up and left
+        {
+            return 7;
+        }
+        return 0;
     }
     
     public override void output_moves()
     {
-        Console.WriteLine("1.Move horizontally.");
-        Console.WriteLine("2.Move vertically");
-        Console.WriteLine("3.Move diagnolly to the right and up or diagnolly to the left and down.");
-        Console.WriteLine("4.move diagnolly to the right and down or diagnolly to the left and up");
+        Console.WriteLine("1.Move the peice up the file.");
+        Console.WriteLine("2.Move the peice down the file");
+        Console.WriteLine("3.Move the peice to the right.");
+        Console.WriteLine("4.Move move the peice to the left.");
+        Console.WriteLine("5.Move diagnolly to the up and right.");
+        Console.WriteLine("6.move diagnolly to the down and left.");
+        Console.WriteLine("7.Move diagnolly to the down and right.");
+        Console.WriteLine("8.move diagnolly to the up and left.");
         
     }
 }
 
 public class king:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
-        if(move == 1)
+        if(move == 1)//up
         {
-            row += direction;
+            return 8;
         }
-        else if(move ==2)
+        else if(move == 2)//down
         {
-            column += direction;
+            return -8;
+        }
+        else if(move == 3)//right
+        {
+            return 1;
+        }
+        else if(move ==4)//left
+        {
+            return -1;
         }
         
-        else if(move ==3)
+        if(move ==5)//move to the up and right.
         {
-            row += direction;
-		    column += direction;
+            return 9;
         }
-        else if(move == 4)
+        else if(move == 6)//move the the down and left
         {
-            row -= direction;
-		    column += direction;
+            return -9;
+	
         }
+        if(move ==7)//move to the down  and right.
+        {
+            return -7;
+        }
+        else if(move == 8)//move to the up and left
+        {
+            return 7;
+        }
+        return 0;
     }
     
     public override void output_moves()
     {
-        Console.WriteLine("1.Move horizontally.");
-        Console.WriteLine("2.Move vertically");
-        Console.WriteLine("3.Move diagnolly to the right and up or diagnolly to the left and down.");
-        Console.WriteLine("4.move diagnolly to the right and down or diagnolly to the left and up");
+        Console.WriteLine("1.Move the peice up the file.");
+        Console.WriteLine("2.Move the peice down the file");
+        Console.WriteLine("3.Move the peice to the right.");
+        Console.WriteLine("4.Move move the peice to the left.");
+        Console.WriteLine("5.Move diagnolly to the up and right.");
+        Console.WriteLine("6.move diagnolly to the down and left.");
+        Console.WriteLine("7.Move diagnolly to the down and right.");
+        Console.WriteLine("8.move diagnolly to the up and left.");
         
     }
 }
 
 public class knight:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
-        if(move == 5)
+        
+        if(move == 9 || move ==21)//up two to the right 1 && right 1 up 2
         {
-            row += 3;
-            column+= direction;
+            return 15;
         }
-        else if(move ==6)
+        else if(move ==10 || move == 23)//up  two to the left 1 and left 1 up two
         {
-            row -=3;
-            column += direction;
+            return 17;
         }
         
-        else if(move ==7)
+        else if(move ==11 || move == 22)//down two to the right 1 and right 1 down 2
         {
-            column += 3;
-		    row += direction;
+            return -15;
         }
-        else if(move == 8)
+        else if(move == 12 || move == 24)//down two the the left 1 and left 1 down 2
         {
-            column -= 3;
-		    row += direction;
+            return -17;
         }
+        
+        else if(move == 13 || move == 17)//right two up 1 up one right two
+        {
+            return 10;
+        }
+        else if(move ==14 || move == 19)//right two down 1 down 1 right two
+        {
+            return -6;
+        }
+        
+        else if(move ==15 || move == 18)//left 2 up 1 up one left two
+        {
+            return 6;
+        }
+        else if(move == 16 || move == 20)//left2 down 1 down one left two
+        {
+            return -10;
+        }
+        
+        return 0;
     }
-    
+    //maybe keep the peices having a direction input, but if its negative, it undoes the move rather then moivng it forward.
     public override void output_moves()
     {
-        Console.WriteLine("5.move 3 up ");
-        Console.WriteLine("6.Move 3 down");
-        Console.WriteLine("7.move 3 right");
-        Console.WriteLine("8.move 3 left");
-        Console.WriteLine("The direction decides the final move of the knight in ether a positive up/negativ down if left/right or");
-        Console.WriteLine("psotive right/negative left if up/down");
+        Console.WriteLine("9.move up 2 and right 1.");
+        Console.WriteLine("10. move up 2 and left 1.");
+        Console.WriteLine("11. move down 2 and right 1.");
+        Console.WriteLine("12. move down 2 and left 1.");
+        Console.WriteLine("13. move right 2 and up 1.");
+        Console.WriteLine("14. move right 2 and down 1.");
+        Console.WriteLine("15. move left 2 and up 1");
+        Console.WriteLine("16. move left 2 and down 1.");
+        Console.WriteLine("17. move up 1 and right 2. ");
+        Console.WriteLine("18. move up 1 and left 2.");
+        Console.WriteLine("19. move down 1 and right 2.");
+        Console.WriteLine("20. move down 1 and left 2.");
+        Console.WriteLine("21. move right 1 and up 2.");
+        Console.WriteLine("22. move right 1 and down 2.");
+        Console.WriteLine("23. move left 1 and up 2.");
+        Console.WriteLine("24. move left 1 and down 2.");
+        
         
     }
 }
 
 public class pawn:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
         
-        if(move ==1)
+        if(move == 1)//up
         {
-		    row += direction;
+            return 8;
         }
-        else if(move == 3)
+        else if(move == 2)//down
         {
-            row += direction;
-		    column += direction;
+            return -8;
         }
-        else if(move == 4)
+        
+        if(move ==5)//move to the up and right.
         {
-            row -= direction;
-		    column += direction;
+            return 9;
         }
+        else if(move == 6)//move the the down and left
+        {
+            return -9;
+	
+        }
+        if(move ==7)//move to the down  and right.
+        {
+            return -7;
+        }
+        else if(move == 8)//move to the up and left
+        {
+            return 7;
+        }
+        return 0;
     }
     
     public override void output_moves()
     {
-        Console.WriteLine("1.Move horizontally.");
-        Console.WriteLine("3.Move diagnolly to the right and up or diagnolly to the left and down if a peice of the opposite color is on that diagnonl.");
-        Console.WriteLine("4.move diagnolly to the right and down or diagnolly to the left and up if a peice of the opposite color is on that diagnonl.");
+        Console.WriteLine("1.Move the peice up the file if your the commanding black");
+        Console.WriteLine("2.Move the peice down the file if your commanding white.");
+        Console.WriteLine("5.Move diagnolly to the up and right. if your commanding black");
+        Console.WriteLine("6.move diagnolly to the down and left if your commanding white.");
+        Console.WriteLine("7.Move diagnolly to the down and right if your commanding white.");
+        Console.WriteLine("8.move diagnolly to the up and left if your commanding black.");
         
     }
 }
 
 public class empty:peice
 {
-    public override void allowed_moves(int move, int direction)
+    public override int allowed_moves(int move)
     {
-         
+         return 1;
     }
     
     public override void output_moves()
     {
         
     }
-}
+}     
+class HelloWorld
+{
+     static List<peice> board = new List<peice>();
+     static string inCheck = " ";
+     
 
-class HelloWorld {
-    static List<peice> board = new List<peice>();
-    static bool game = true;
-    
-    public static castle create_castle(int id, string color, int row, int column)
+     public static castle create_castle(int id, string color, int row, int column)
     {
 	    castle c = new castle();
 	    c.type = "c";
@@ -240,6 +353,8 @@ class HelloWorld {
 	    c.column = column;
 	    c.add_moves(1);
 	    c.add_moves(2);
+	    c.add_moves(3);
+	    c.add_moves(4);
 	    return c;
     }
 
@@ -251,10 +366,22 @@ class HelloWorld {
 	    k.id = id;
 	    k.row = row;
 	    k.column = column;
-	    k.add_moves(5);
-	    k.add_moves(6);
-	    k.add_moves(7);
-	    k.add_moves(8);
+	    k.add_moves(9);
+	    k.add_moves(10);
+	    k.add_moves(11);
+	    k.add_moves(12);
+	    k.add_moves(13);
+	    k.add_moves(14);
+	    k.add_moves(15);
+	    k.add_moves(16);
+	    k.add_moves(17);
+	    k.add_moves(18);
+	    k.add_moves(19);
+	    k.add_moves(20);
+	    k.add_moves(21);
+	    k.add_moves(22);
+	    k.add_moves(23);
+	    k.add_moves(24);
 	    return k;
     }
 
@@ -266,8 +393,10 @@ class HelloWorld {
     	b.id = id;
     	b.row = row;
     	b.column = column;
-    	b.add_moves(3);
-    	b.add_moves(4);
+    	b.add_moves(5);
+    	b.add_moves(6);
+    	b.add_moves(7);
+    	b.add_moves(8);
     	return b;
     }
 
@@ -283,6 +412,10 @@ class HelloWorld {
 	    q.add_moves(2);
 	    q.add_moves(3);
 	    q.add_moves(4);
+	    q.add_moves(5);
+    	    q.add_moves(6);
+    	    q.add_moves(7);
+    	    q.add_moves(8);
 	    return q;
     }
 
@@ -294,10 +427,14 @@ class HelloWorld {
 	    k.id = id;
 	    k.row = row;
 	    k.column = column;
-    	k.add_moves(1);
-        k.add_moves(2);
-        k.add_moves(3);
-        k.add_moves(4);
+            k.add_moves(1);
+            k.add_moves(2);
+            k.add_moves(3);
+            k.add_moves(4);
+            k.add_moves(5);
+    	    k.add_moves(6);
+    	    k.add_moves(7);
+    	    k.add_moves(8);
 	    return k;
     }
 
@@ -309,9 +446,19 @@ class HelloWorld {
 	    p.id = id;
 	    p.row = row;
 	    p.column = column;
-	    p.add_moves(1);
-        p.add_moves(3);
-        p.add_moves(4);
+	    
+	    if(color == "w")
+	    {
+	        p.add_moves(2);
+	        p.add_moves(6);
+    	        p.add_moves(7);
+	    }
+	    
+	    else{
+	        p.add_moves(1);
+	        p.add_moves(5);
+    	        p.add_moves(8);
+	    }
 	   
 	    return p;
     }
@@ -374,605 +521,432 @@ class HelloWorld {
     {
 	    Console.WriteLine("-------------------------");
 	    Console.Write("|");
+	    int count = 1;
 	    foreach(peice p in board)
 	    {
 		    Console.Write(p.color + p.type +"|");
-		    if(p.column ==8)
+		    if(count==8)
 		    {
 			    Console.WriteLine(" ");
 			    Console.WriteLine("-------------------------");
 			    Console.Write("|");
+			    count = 0;
 		    }
+		    count++;
 	    }
 	
     }
     
-    static int findI(int row, int column)//used to find the index of a peice in the board by their row and column.
+    static void update_board(List<peice> p, int p1, int p2, int p3, int p4)
     {
-        int index = 0;
+        board[p1] = p[0];
+			
+    	board[p2] = create_empty(0, " ", p3, p4);
+    }
+    
+    static void output_peices(string color)//outputs relavent information about the peices.
+    {
         foreach(peice p in board)
         {
-            if(p.row == row && p.column == column)
-            {
-                return index;
-            }
-            else
-            {
-                index++;
-            }
-        }
-        
-        return index;
-    }
-    
-    static bool check_can_move(List<peice> p, int move, string color, int direction)//checks if the peice can move in a givin direction for a move, if not, then it returns false, else, the peice can move.
-    {
-	    bool can_move = false;
-	
-		if(move == 1)
-		{
-			if(p[0].type == "p" && color == "b" && direction < 0 )//we have a pawn trying to move in the wrong direction, so return false.
-			{
-				return can_move;
-			}
-			else if(p[0].type == "p" && color == "w" && direction > 0)
-			{
-				return can_move;
-			}
-            
-            
-			else
-			{
-			    if(p[0].row + direction >8 || p[0].row + direction <= 0 )//checks to make sure the peice moving won't go out of bounds
-                {
-                    return can_move;
-                }
-				int p1 = findI(p[0].row + direction, p[0].column);
-				
-				if(board[p1].color != color )
-				{
-					return can_move = true;
-				}
-			}
-		}
-
-		else if(move == 2)
-		{
-		    if(p[0].column + direction >8 || p[0].column + direction  <= 0 )
-            {
-                return can_move;
-            }
-            
-			int p1 = findI(p[0].row , p[0].column + direction);
-			
-			if(board[p1].color != color)
-			{
-				return can_move = true;
-			}
-		}
-
-		else if(move == 3)//left-right diagnol
-		{
-			if(p[0].type == "p" && color == "b" && direction < 0)
-			{
-				return can_move;
-			}
-			else if(p[0].type == "p" && color == "w" && direction > 0)
-			{
-				return can_move;
-			}
-
-			else
-			{
-			    if(p[0].row + direction >8 || p[0].column + direction >8  || p[0].column + direction <=0  || p[0].row + direction <= 0 )
-                {
-                    return can_move;
-                }
-                
-				int p1 = findI(p[0].row + direction, p[0].column + direction);
-				
-				if(p[0].type == "p" && board[p1].color != color && board[p1].type == " ")
-				{
-				    return can_move;
-				}
-				
-				else if(board[p1].color != color)
-				{
-					return can_move = true;
-				}
-			}
-		}
-
-		else if(move == 4)//right-left diagnol
-		{
-			if(p[0].type == "p" && color == "b" && direction > 0)
-			{
-				return can_move;
-			}
-			else if(p[0].type == "p" && color == "w" && direction < 0)
-			{
-				return can_move;
-			}
-
-			else
-			{
-			    if(p[0].row - direction > 8 || p[0].column + direction > 8  || p[0].column + direction <= 0  || p[0].row - direction <= 0 )
-                {
-                    return can_move;
-                }
-			    
-				int p1 = findI(p[0].row - direction, p[0].column + direction);
-				if(p[0].type == "p" && board[p1].color != color && board[p1].type == " ")
-				{
-				    return can_move;
-				}
-				
-				if(board[p1].color != color)
-				{
-					return can_move = true;
-				}
-			}
-		}
-
-		else if(move==5)//knight move up
-		{
-		    if(p[0].row + 3 > 8 || p[0].column + direction >8  || p[0].column + direction < 0 )
-            {
-                return can_move;
-            }
-			int p1 = findI(p[0].row + 3, p[0].column + direction);
-			
-			if(board[p1].color != color)
-			{
-				return can_move = true;
-			}
-
-		}
-		else if(move==6)//knight move down
-		{
-		    if(p[0].row - 3 >8 || p[0].column + direction >8  || p[0].column + direction <= 0)
-            {
-                return can_move;
-            }
-			int p1 =findI(p[0].row - 3, p[0].column + direction);
-			
-			if(board[p1].color != color)
-			{
-				return can_move = true;
-			}
-
-		}
-		
-		else if(move==7)//knight move right
-		{
-		    if(p[0].row + direction >8 || p[0].column + 3 >8 || p[0].row + direction <= 0 )
-            {
-                return can_move;
-            }
-		    
-			int p1 = findI(p[0].row + direction, p[0].column + 3);
-			if(board[p1].color != color)
-			{
-				return can_move = true;
-			}
-
-		}
-
-		else if(move==8)//knight move left
-		{
-		    if(p[0].row + direction > 8 || p[0].column - 3 > 8 || p[0].row + direction <= 0 )
-            {
-                return can_move;
-            }
-            
-			int p1 = findI(p[0].row + direction, p[0].column - 3);
-			if(board[p1].color != color)
-			{
-				return can_move = true;
-			}
-
-		}
-
-		return can_move;
-
-    }
-    
-    static List<peice> getTypes(string selectType, string color)//gets the board peices based on type and color.
-    {
-        List<peice> p2 = new List<peice>();
-        foreach(peice p in board)
-        {
-            if(p.color == color && p.type == selectType)
-            {
-                p2.Add(p);
-            }
-        }
-        return p2;
-    }
-    
-    static void output_peices(List<peice> p)//outputs relavent information about the peices.
-    {
-        foreach(peice p2 in p)
-        {
-            Console.Write(p2.type + ":row=" + p2.row + " column=" + p2.column + " Id=" + p2.id + ", ");
+	    if(p.color == color)
+	    {
+            	Console.Write(p.type + ":row=" + p.row + " column=" + p.column + " Id=" + p.id + ", ");
+	    }
         }
         Console.WriteLine(" ");
         
     }
 
-    static void get_type(string color)//get the type from the user, which then gets all of that users peices of that type.
+
+    //////////////////////////////////////////////////
+    ///start of getting peices of the board/checks////
+    /////////////////////////////////////////////////
+    
+    static int findKing(string color)
     {
-	    bool avalible = false;
-	    string selectType;
-	    while(!avalible)//grabs the type of peice
-	    {
-		    Console.WriteLine("Please enter the type of peice you would like to select.");
-		    selectType = Console.ReadLine();
-		    List<peice>p2 = getTypes(selectType, color);
-		    
-		    if(p2.Count == 0)
-		    {
-			    Console.WriteLine("You no longer control a peice of that type.");
-		    }
-		    else{
-			    output_peices(p2);
-			    if(get_id(p2, color))
-			    {
-				    avalible = true;
-			    }
-			    avalible = true;
-			
-		    }
-	    }
+        int index = 0;
+        foreach(peice p in board)
+        {
+            if(p.color == color && p.type == "k")
+            {
+                return index;
+            }
+            index++;
+        }
+        return index;
     }
     
-    static List<peice> getId(List<peice> p, int selectId)//get the correct peice from an id provided by the user
+    static int findI(List<peice> p)
+    {
+        return board.FindIndex(a=> a == p[0]);
+    }
+
+     static bool check_for_check(string color)
+     {
+		int p = findKing(color);
+		int p2 = p;
+		int count = 1;
+		List<int> moves = board[p].return_moves();
+		//may be able to simply this for each with the new function created below.
+		foreach(int move in moves)
+		{
+			p2 += board[p].allowed_moves(move);
+			while(p2 > 0 && p2 < 64)
+			{
+				
+				if(board[p2].color == board[p].color)
+				{
+					break;
+				}
+				if(board[p2].color != color && board[p2].contains_move(move) && board[p2].type != " ")
+				{
+					if(board[p2].type == "k" ||( board[p2].type == "k"&& (count > 1 || move == 1 || move == 2)))
+					{
+						break;
+					}
+					return true;
+				}
+				p2 += board[p].allowed_moves(move);
+				count++;
+				
+			}
+			p2 = p;
+			count = 1;
+		}
+	
+		int[] knightPos = {6, 10, 15, 17};
+		int i = 0;
+		for(i = 0; i < 4; i++)
+		{
+			p2 = p + knightPos[i];
+			if(p2 > 63)
+			{
+				break;
+			}
+			else if(board[p2].type == "h" && board[p2].color != color)
+			{
+				return true;
+			}
+		}
+
+		for(i = 0; i < 4; i++)
+		{
+			p2 = p - knightPos[i];
+			if(p2 < 1)
+			{
+				break;
+			}
+			else if(board[p2].type == "h" && board[p2].color != color)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+     }
+
+    static bool put_in_check(List<peice> p, int move, string color)
+    {
+	bool putInCheck = false;
+	int place = findI(p);
+	int update = p[0].allowed_moves(move);
+	string nextType = board[place + update].type;
+	string nextColor = board[place + update].color;
+
+	board[place+update].color = color;
+	board[place+update].type = board[place].type;
+	board[place].color = " ";
+	board[place].type = " ";
+
+	putInCheck = check_for_check(color);
+
+	board[place].color = color;
+	board[place].type = board[place+update].type;
+	board[place+update].color = nextColor;
+	board[place+update].type = nextType;
+	
+
+	return putInCheck;
+    }
+
+    static bool still_in_check(List<peice> p, int place1, int place2, string color)
+    {
+	bool putInCheck = false;
+	
+	
+	string nextType = board[place2].type;
+	string nextColor = board[place2].color;
+
+	board[place2].color = color;
+	board[place2].type = board[place1].type;
+	board[place1].color = " ";
+	board[place1].type = " ";
+
+	putInCheck = check_for_check(color);
+
+	board[place1].color = color;
+	board[place1].type = board[place2].type;
+	board[place2].color = nextColor;
+	board[place2].type = nextType;
+	
+
+	return putInCheck;
+    }
+
+    static bool check_can_move(List<peice> p, int move, string color)//checks if the peice can move in a givin direction for a move, if not, then it returns false, else, the peice can move.
+    {
+	    bool can_move = false;
+	    
+	    int place = findI(p);
+	    place += p[0].allowed_moves(move);
+	    
+	    
+	    //another check if for pawn moving twice, which should be only possible for a white pawn with index 
+	    if( place > 63 || place < 0)
+	    {
+	        return can_move;
+	    }
+	    
+	    if(p[0].type == "p" && move > 2 && board[place].color != color && board[place].type != " ")
+	    {
+		return can_move = true;
+	    }
+	    if(board[place].color != color)
+	    {
+	        can_move = true;
+	    }
+	    return can_move;
+		
+
+    }
+
+    static List<peice> getPeice(string selectType, int Id, string color)//gets the peice the user inputed or returns nothing.
     {
         List<peice> p2 = new List<peice>();
-        foreach(peice peice in p)
+        foreach(peice p in board)
         {
-            if(peice.id == selectId)
+            if(p.color == color && p.type == selectType && p.id == Id)
             {
-                p2.Add(peice);
-                return p2;
+                p2.Add(p);
+		return p2; 
             }
         }
         return p2;
     }
-    
-    static bool get_id(List<peice> p, string color)
+
+    static bool off_board(int place)
     {
-	    int selectId;
-	    string selectNew;
-	    bool avalible = false;
-	    while(!avalible)//grabs the id of peice
-	    {
-	        Console.WriteLine("Please enter the id of the peice you would like to move.");
-		    selectId = Convert.ToInt32(Console.ReadLine());
-		    List<peice>p2 = getId(p, selectId);
-		    Console.WriteLine(p2[0].type);
-		    if(p2.Count == 0)
-		    {
-			    Console.WriteLine("Not a valid id, please enter a new one.");
-		    }
-		    else{
-		    	
-		    	List<int> moves = p2[0].return_moves();//grab the moves of that peice
-		    	bool can_move = false;
-		    	bool can_move2 = false;
-		    	foreach(int i in moves)
-			    {
-				    can_move = check_can_move(p2,i, color, 1);//check if the peice can move positivly
-				    can_move2 = check_can_move(p2,i, color, -1);//check if the peice can move negativly
-				    if(can_move || can_move2)
-				    {
-					    get_player_move(p2, moves, color);
-					    return true;
-				    }
-			    }
-			    Console.WriteLine("That peice cannot move, please select another one.");
-			
-		    }
-		
-		    //if the peice cannot move, the prompt the user if they would like a new type of peice.
-		    Console.WriteLine("Would you like to select a differnt type of peice or select another of the current? Enter y to select a new type.");
-		    selectNew = Console.ReadLine();
-		    if(selectNew =="y")
-		    {
-			    avalible = true;
-		    }
-	    }
-	    return false;
+	if(place > 63 || place < 0){return true;}
+	return false;
 	
     }
-    
-    static void get_player_move(List<peice> p, List<int> moves, string color)//get the move for that peice
+
+    static bool blocked(int place, string color)
+    {
+	if(board[place].color ==color){return true;}
+	return false;
+	
+    }
+    static bool continue_move(int place, string color)
+    {
+	if(board[place].color != color && board[place].type != " "){return false;}
+	return true;
+	
+    }
+    //////////////////////////////////////////////////
+    ///start of getting peices of the board/checks////
+    /////////////////////////////////////////////////
+
+    static void get_type(string color)//get the type from the user, which then gets all of that users peices of that type.
+    {
+	    bool avalible = false;
+	    string selectType;
+	    int selectId;
+	    List<int> moves = new List<int>();//list of moves for that peice
+
+		//here would be a place to check for if any moves are possible. if not, set game = false and return.
+	    
+	    while(!avalible)//grabs the type and id of a peice.
+	    {
+		    output_peices(color);
+		    Console.WriteLine("Please enter the type of peice you would like to select.");
+		    selectType = Console.ReadLine();
+		    Console.WriteLine("Please enter the Id of peice you would like to select.");
+		    selectId = Convert.ToInt32(Console.ReadLine());
+		    List<peice>p = getPeice(selectType, selectId, color);
+		    
+		    if(p.Count == 0)
+		    {
+			    Console.WriteLine("You no longer control that peice or what you entered was invalid.");
+			    continue;
+		    }
+			    
+		    moves = p[0].return_moves();
+		    
+	
+		    if(!get_player_move(p, moves, color))
+		    {
+			   continue;
+		    }
+		    
+		    avalible = true;
+		    
+	    }
+    }
+
+    static bool get_player_move(List<peice> p, List<int> moves, string color)//get the move for that peice
     {
 	    int selectMove;
-    	bool okay = false;
-	    bool okay2 = false;
 	    bool avalible = false;
 	    while(!avalible)//grabs the valid move of the peice.
 	    {
-	        p[0].output_moves();
-		    Console.WriteLine("Please select the move you would like to do with the peice.");
+	            p[0].output_moves();//maybe change this to output only the valid moves
+		    Console.WriteLine("Please select the move you would like to do with the peice, input -1 to select a new peice.");
 		    selectMove = Convert.ToInt32(Console.ReadLine());
 
-		
-
-		    if(moves.Contains(selectMove))//if that move exists, then continue
+		    if(selectMove == -1)
 		    {
-		        	//check if the peice can move in that direction, if so, then we continue.
-			    okay = check_can_move(p, selectMove, color, 1);//check if the move type is blocked, if at least one move is avalible, then its true;
-			    okay2 = check_can_move(p, selectMove, color, -1);
-			    if(okay == true || okay2 == true)
-			    {
-			    	avalible = true;
-			    	get_num_moves(p, selectMove, color);
-			    }
-
-			
+			    return false;
 		    }
+
+		    if(!moves.Contains(selectMove))//if doesn't move exists, then continue
+		    {
+		     	Console.WriteLine("Sorry, the peice cannot currently do that move, please select a new move or new peice.");  
+			continue; 
+		    }
+
+		    
+			
+		    if(!get_num_moves(p, selectMove, color))
+		    {
+			continue;
+		    }
+		    avalible = true;
+		    
 		
 	    }
+	    return true;
 		
     }
-    
-    static void get_num_moves(List<peice>p, int selectMove, string color)//get the number of times the player want to move said peice.
+
+    static bool get_num_moves(List<peice>p, int selectMove, string color)//get the number of times the player want to move said peice.
     {
 		int selectNumber;
 		bool avalible = false;
-		Console.WriteLine("Please select number of times you would like to move the peice.");
+		Console.WriteLine("Please select number of times you would like to move the peice?");
+		Console.WriteLine("This number will move the peice one space in the selected direction.");
+		Console.WriteLine("If the peice is blocked by a peice of the same color or the end of the board, it will stop.");
+		Console.WriteLine("If it captures a peice, it will stop.");
+		Console.WriteLine("Lastly, it is important to note that a king, knight, and pawn, can only move once.");
 		while(!avalible)
 		{
-			selectNumber = Convert.ToInt32(Console.ReadLine());
+		    selectNumber = Convert.ToInt32(Console.ReadLine());
+
+		    if(selectNumber <= 0)
+		    {
+			Console.WriteLine("That is not a vliad number, please input a new one.");
+			continue;
+		    }
 		
-			if(selectNumber <=0 || selectNumber > 8)//if an invalid number, ask again.
-			{
-				avalible = false;
-				Console.WriteLine("Invalid number, please enter a number between 1 and 8.");
-			}
-		
-		    else if(p[0].type == "p" || p[0].type == "k" || p[0].type == "h")//if one of three peices, then can only move once.
+		    if(p[0].type == "p" || p[0].type == "k" || p[0].type == "h")//if one of three peices, then can only move once.
 		    {
 			    selectNumber = 1;
-			    avalible = true;
-			    get_direction(p, selectMove, color, selectNumber);
+			    
 		    }
-		    else
+		    
+		    if(!finialize_move(p, selectMove, selectNumber, color))
 		    {
-		        avalible = true;
-			    get_direction(p, selectMove, color, selectNumber);
+			return false;
 		    }
-        }
+		    avalible = true;
+        	}
+		return true;
 		
     }
-    
-    
-    static void get_direction(List<peice> p, int selectMove, string color, int selectNumber)
+
+    static bool finialize_move(List<peice> p, int selectMove, int selectNumber, string color)
     {
-        
-	    Console.WriteLine("Please direction of the peice you would like to move.");
-	    Console.WriteLine("Movments to the right and down are considered psoitive.");
-	    Console.WriteLine("For the knight, this only affects the final move, and for pawns, only postive moves are accepted.");
-	    int selectDirection = Convert.ToInt32(Console.ReadLine());
-		
-	    if(selectDirection <=0)
+	    if(!check_can_move(p, selectMove, color))
 	    {
-		    selectDirection = -1;
+		Console.WriteLine("Sorry, you cannot move with that peice in that direction, please select an other peice or move.");
+		return false;
 	    }
-	    else
+	    if(put_in_check(p, selectMove, color))
 	    {
-		    selectDirection = 1;
+		Console.WriteLine("Sorry, moveing the peice like that will put you in check, please select an other peice or move.");
+		return false;
+	    }
+
+	    int p1 = findI(p);
+	    int update = 0;
+	    bool stop = false;
+	    for(int i = 0; i < selectNumber; i++)
+	    {
+		
+		//after this, we can do a check in here that is done after the final move, where if still in check, we return false.
+		update += p[0].allowed_moves(selectMove);
+		
+		if(off_board(p1+update))
+		{
+			update -= p[0].allowed_moves(selectMove);
+			break;
+		}
+		if(blocked(p1 + update, color))
+		{
+		    update -= p[0].allowed_moves(selectMove);
+			break;
+		}
+		if(!continue_move(p1 + update, color))
+		{
+			break;
+		}
+		
 	    }
 	    
-	    bool direction_check = check_can_move(p, selectMove, color, selectDirection);
-	    
-	    if(!direction_check)
+	    if(inCheck == color)
 	    {
-	        selectDirection = selectDirection * -1;
+		if(still_in_check(p, p1, p1+update, color))
+		{
+			Console.WriteLine("Your king is still in check, please modify your move, select a new move, or select a new peice.");
+			return false;
+		}
+		inCheck = " ";
 	    }
+	    
+	    board[p1 + update] = p[0];
+	    board[p1] = create_empty(0, " ", 0, 0);
 	
-	    finialize_move(p, selectMove, selectDirection, selectNumber, color);
-	
+	    if(color == "w")
+	    {
+		if(check_for_check("b"))
+		{
+			inCheck = "b";
+		}
+	    }
+	    if(color == "b")
+	    {
+		if(check_for_check("w"))
+		{
+			inCheck = "w";
+		}
+	    }
+	    return true;
     }
     
-    
-    static void finialize_move(List<peice> p, int selectMove, int direction, int selectNumber, string color)
-    {
-	bool cont = true;
-	bool blocked = true;//can move returns true if the peice can move in that direction.
-	for(int i = 0; i < selectNumber; i++)
-	{
-		blocked = check_can_move(p, selectMove, color, direction);
-		Console.WriteLine(blocked);
-
-		if(!blocked)
-		{
-			return;
-		}
-
-		if(selectMove== 1)//move up/down
-		{
-			int p1 =findI(p[0].row + direction, p[0].column);
-			int p2 =findI(p[0].row, p[0].column);
-			
-			Console.WriteLine(p1 + " " + p2);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove, direction);
-			
-			if(p[0].type == "p" && p[0].row == 1 || p[0].row ==8)
-			{
-			    p[0].type = "q";
-			    p[0].add_moves(2);
-			}
-			
-			board[p1] = p[0];
-			
-			board[p2] = create_empty(0, " ", p[0].row - direction, p[0].column );
-		}
-
-		else if(selectMove== 2)//move left/right
-		{
-		
-			int p1 = findI(p[0].row, p[0].column  + direction );
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove,direction);
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row , p[0].column - direction);
-		}
-
-		else if(selectMove== 3)//move left right diagnol
-		{
-			int p1 = findI(p[0].row + direction, p[0].column + direction);
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove, direction);
-			if(p[0].type == "p" && p[0].row == 1 || p[0].row ==8)
-			{
-			    p[0].type = "q";
-			    p[0].add_moves(2);
-			}
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row - direction, p[0].column - direction);
-		}
-
-		else if(selectMove== 4)//move diagnol right left 
-		{
-			int p1 = findI(p[0].row - direction, p[0].column + direction);
-			int p2 = findI(p[0].row,p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove,direction);
-			if(p[0].type == "p" && p[0].row == 1 || p[0].row ==8)
-			{
-			    p[0].type = "q";
-			    p[0].add_moves(2);
-			}
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row + direction, p[0].column - direction);
-		}
-
-		else if(selectMove== 5)//up knight
-		{
-			int p1 = findI( p[0].row + 3, p[0].column + direction);
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove,direction);
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row - 3, p[0].column - direction);
-		}
-
-		else if(selectMove== 6)//down knight
-		{
-			int p1 = findI(p[0].row - 3, p[0].column + direction);
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove,direction);
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row + 3, p[0].column - direction);
-		}
-
-		else if(selectMove== 7)//right knight
-		{
-			int p1 = findI(p[0].row +direction, p[0].column + 3);
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove,direction);
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row - direction, p[0].column - 3);
-		}
-		
-		else if(selectMove== 8)//left knight
-		{
-			int p1 = findI(p[0].row + direction, p[0].column - 3);
-			int p2 = findI(p[0].row, p[0].column);
-			if(board[p1].color != color && board[p1].type != " ")
-			{
-				cont = false;
-			}
-			p[0].allowed_moves(selectMove, direction);
-			board[p1] = p[0];
-			board[p2] = create_empty(0, " ", p[0].row - direction, p[0].column + 3);
-		}
-		
-		
-
-		if(!cont)
-		{
-			return;
-		}
-
-		
-	}
-	
-}
-
-static void game()
-{
-  create_board();
-  string color = "w";
-  bool has_king = true;
-  while(game)
-  {
-    output_board();
-    get_type(color);
-    
-    has_king = getTypes(color, "k")
-    
-    if(!has_king)
-    {
-      game = false;
-    }
-    if(color == "w")
-    {
-      color = "b";
-    }
-    
-    else
-    {
-      color = "w";
-    }
-  }
-  
-}
-    
-  static void Main() {
+    static void Main() {
+      
       create_board();
       output_board();
-      get_type("b");
-      output_board();
-      get_type("b");
-      output_board();
+      
       get_type("b");
       output_board();
       
+      get_type("b");
+      output_board();
       
-      
-      
-   
+      get_type("b");
+      output_board();
   }
-}
+}	
     
 
