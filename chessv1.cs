@@ -42,6 +42,7 @@ public class castle:peice
         if(move == 1)//up
         {
             return 8;
+	    
         }
         else if(move == 2)//down
         {
@@ -337,11 +338,15 @@ public class empty:peice
         
     }
 }     
+  
 class HelloWorld
 {
      static List<peice> board = new List<peice>();
      static string inCheck = " ";
+     static empty tempEmpty = new empty();
      
+     static List<peice> tempHolder = new List<peice>();
+    
 
      public static castle create_castle(int id, string color, int row, int column)
     {
@@ -517,6 +522,40 @@ class HelloWorld
 
     }
     
+    static void test_board_draw()//update this for testing checkmate. then for putting in to check.
+    {
+        int i = 0;
+        int j = 1;
+        for(i = 1; i < 9; i++)
+        {
+            if(i==2 && j == 2 || i==4 && j == 1)
+            {
+                board.Add(create_castle(1, "w", j, i));
+            }
+            else if(i == 1 && j== 7)
+            {
+               board.Add(create_castle(1, "w", j, i)); 
+            }
+            
+            else if(i==2 && j == 1)
+            {
+                board.Add(create_pawn(1, "b", j, i));
+            }
+            else if(i == 3 && j == 8)
+            {
+                board.Add(create_king(1, "b", j, i));
+            }
+            else{
+                board.Add(create_empty(0, " ", j, i));
+            }
+            
+		    if(i == 8 && j < 8)
+		    {
+			    i =0;
+			    j++;
+		    }
+        }
+    }
     static void output_board()//outputs the board, peices are identified with thier color followed by type.
     {
 	    Console.WriteLine("-------------------------");
@@ -556,8 +595,7 @@ class HelloWorld
         Console.WriteLine(" ");
         
     }
-
-
+    
     //////////////////////////////////////////////////
     ///start of getting peices of the board/checks////
     /////////////////////////////////////////////////
@@ -576,17 +614,92 @@ class HelloWorld
         return index;
     }
     
+    static List<peice> get_all_peices(string color)///returns all the peices of a color
+    {
+	List<peice> peices = new List<peice>();
+	foreach(peice p in board)
+	{
+		if(p.color == color)
+		{
+			peices.Add(p);
+		}
+	}
+	return peices;
+    }
+    
     static int findI(List<peice> p)
     {
         return board.FindIndex(a=> a == p[0]);
+    }
+    
+    static bool check_check_mate(string color)//is called when in check, grabs all the peices and tests if they remove a check.
+    {
+	List<peice> peices = new List<peice>();
+	List<peice> p = new List<peice>();
+
+	
+	
+	peices = get_all_peices(color);
+	if(p.Count == 1)
+	{
+		return true;
+	}
+	p.Add(peices[0]);
+	List<int> moves = new List<int>();
+	foreach(peice p1 in peices)
+	{
+	    p[0] = p1;
+		moves = p[0].return_moves();
+		foreach(int move in moves)
+		{
+			if(!check_check_mate_moves(p, move, 8, color))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+    }
+
+    ///this is for check that at least one peice can move, only called when not in check at the start of a turn.
+    static bool draw(string color)
+    {
+	List<peice> peices = new List<peice>();
+	peices = get_all_peices(color);
+	List<int> moves = new List<int>();
+	List<peice> p = new List<peice>();
+	
+	Console.WriteLine(peices.Count);
+	p.Add(peices[0]);
+	foreach(peice p1 in peices)
+	{
+	    p[0] = p1;
+		moves = p[0].return_moves();
+		foreach(int i in moves)
+		{
+			if(!check_can_move(p,i,color))
+			{
+				continue;
+			}
+			if(put_in_check(p, i, color))
+			{
+				continue;
+			}
+			return false;
+			
+		}
+	}
+	return true;
     }
 
      static bool check_for_check(string color)
      {
 		int p = findKing(color);
+		Console.WriteLine(p);
 		int p2 = p;
 		int count = 1;
-		List<int> moves = board[p].return_moves();
+		List<int> moves = board[p].return_moves();//1,2,3,4,5,6,7,8// this problem here with this is that moving the king through our normal systems doesn't work, as it would have the wrong type of movment
+		//may need a new function entierly for checking when we move the king.
 		//may be able to simply this for each with the new function created below.
 		foreach(int move in moves)
 		{
@@ -650,23 +763,21 @@ class HelloWorld
 	bool putInCheck = false;
 	int place = findI(p);
 	int update = p[0].allowed_moves(move);
-	string nextType = board[place + update].type;
-	string nextColor = board[place + update].color;
-
-	board[place+update].color = color;
-	board[place+update].type = board[place].type;
-	board[place].color = " ";
-	board[place].type = " ";
+	
+	tempHolder[0] = board[place+update];
+	
+	board[place +update] = board[place];
+	board[place] = tempEmpty;
 
 	putInCheck = check_for_check(color);
 
-	board[place].color = color;
-	board[place].type = board[place+update].type;
-	board[place+update].color = nextColor;
-	board[place+update].type = nextType;
+	board[place] = board[place+update];
+	board[place+update] = tempHolder[0];
 	
 
 	return putInCheck;
+	
+
     }
 
     static bool still_in_check(List<peice> p, int place1, int place2, string color)
@@ -698,20 +809,21 @@ class HelloWorld
 	    bool can_move = false;
 	    
 	    int place = findI(p);
-	    place += p[0].allowed_moves(move);
+	    int update = p[0].allowed_moves(move);
+	    
 	    
 	    
 	    //another check if for pawn moving twice, which should be only possible for a white pawn with index 
-	    if( place > 63 || place < 0)
+	    if(off_board(place + update, place, move))
 	    {
-	        return can_move;
+		return can_move;
 	    }
 	    
-	    if(p[0].type == "p" && move > 2 && board[place].color != color && board[place].type != " ")
+	    if(p[0].type == "p" && move > 2 && board[place+update].color != color && board[place+update].type != " ")
 	    {
 		return can_move = true;
 	    }
-	    if(board[place].color != color)
+	    if(board[place+update].color != color)
 	    {
 	        can_move = true;
 	    }
@@ -719,6 +831,56 @@ class HelloWorld
 		
 
     }
+    
+    static bool check_check_mate_moves(List<peice> p, int selectMove, int selectNumber, string color)///modified finalize move to check if a peice moving at all could remove a check, if not, then 
+    {
+	    if(!check_can_move(p, selectMove, color))
+	    {
+		return true;
+	    }
+	    if(put_in_check(p, selectMove, color))
+	    {
+		return true;
+	    }
+
+	    int p1 = findI(p);
+	    int update = 0;
+	    bool stop = false;
+	    for(int i = 0; i < selectNumber; i++)
+	    {
+		
+		//after this, we can do a check in here that is done after the final move, where if still in check, we return false.
+		update += p[0].allowed_moves(selectMove);
+		
+		if(off_board(p1+update, p1, selectMove))
+		{
+			update -= p[0].allowed_moves(selectMove);
+			break;
+		}
+		if(blocked(p1 + update, color))
+		{
+		    update -= p[0].allowed_moves(selectMove);
+			break;
+		}
+		if(!continue_move(p1 + update, color))
+		{
+			break;
+		}
+		if(inCheck == color)//this may allow us to check for moves that would block the peice from attacking without removing the attacking peice.
+	   	{
+			if(still_in_check(p, p1, p1+update, color))
+			{
+			return true;
+	  	}
+		
+	    }
+		
+	    }
+	    
+	    return false;
+    }
+
+
 
     static List<peice> getPeice(string selectType, int Id, string color)//gets the peice the user inputed or returns nothing.
     {
@@ -734,9 +896,18 @@ class HelloWorld
         return p2;
     }
 
-    static bool off_board(int place)
+    static bool off_board(int next, int previous, int move)
     {
-	if(place > 63 || place < 0){return true;}
+	if(next > 63 || next < 0){return true;}
+	else if(move == 3 || move == 5 || move == 7 || move == 9 || move ==11 || move == 13 || move == 14 || move == 17 || move == 19 || move == 21 || move == 22)
+	{
+		if(board[next].column < board[previous].column){return true;}
+	}
+
+	else if(move == 4 || move == 6 || move == 8 || move == 10 || move ==12 || move == 15 || move ==16 || move == 18 || move == 20 || move == 23 || move == 24)
+	{
+		if(board[next].column > board[previous].column){return true;}
+	}
 	return false;
 	
     }
@@ -764,7 +935,10 @@ class HelloWorld
 	    int selectId;
 	    List<int> moves = new List<int>();//list of moves for that peice
 
-		//here would be a place to check for if any moves are possible. if not, set game = false and return.
+		if(draw(color))
+		{
+		    return;
+		}
 	    
 	    while(!avalible)//grabs the type and id of a peice.
 	    {
@@ -886,7 +1060,7 @@ class HelloWorld
 		//after this, we can do a check in here that is done after the final move, where if still in check, we return false.
 		update += p[0].allowed_moves(selectMove);
 		
-		if(off_board(p1+update))
+		if(off_board(p1+update, p1, selectMove))
 		{
 			update -= p[0].allowed_moves(selectMove);
 			break;
@@ -910,11 +1084,21 @@ class HelloWorld
 			Console.WriteLine("Your king is still in check, please modify your move, select a new move, or select a new peice.");
 			return false;
 		}
-		inCheck = " ";
+		else	
+		{
+			inCheck = " ";
+		}
 	    }
 	    
+	    int old_column = p[0].column;
+	    int old_row = p[0].row;
+	    int new_row = board[p1+update].row;
+	    int new_column = board[p1+update].column;
+	    p[0].row = new_row;
+	    p[0].column = new_column;
 	    board[p1 + update] = p[0];
-	    board[p1] = create_empty(0, " ", 0, 0);
+	    
+	    board[p1] = create_empty(0, " ", old_row, old_column);
 	
 	    if(color == "w")
 	    {
@@ -934,8 +1118,12 @@ class HelloWorld
     }
     
     static void Main() {
+        
+      tempEmpty.color = " ";
+      tempEmpty.type = " ";
+      tempHolder.Add(tempEmpty);
       
-      create_board();
+      test_board_draw();
       output_board();
       
       get_type("b");
@@ -947,6 +1135,7 @@ class HelloWorld
       get_type("b");
       output_board();
   }
-}	
+}
+    
     
 
