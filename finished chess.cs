@@ -357,7 +357,7 @@ class HelloWorld
      static empty tempEmpty = new empty();
      
      static List<peice> tempHolder = new List<peice>();
-    bool game = true;
+     bool game = true;
 
      public static castle create_castle(int id, string color, int row, int column)
     {
@@ -429,9 +429,9 @@ class HelloWorld
 	    q.add_moves(3);
 	    q.add_moves(4);
 	    q.add_moves(5);
-    	q.add_moves(6);
-    	q.add_moves(7);
-      q.add_moves(8);
+    	    q.add_moves(6);
+    	    q.add_moves(7);
+            q.add_moves(8);
 	    return q;
     }
 
@@ -443,16 +443,16 @@ class HelloWorld
 	    k.id = id;
 	    k.row = row;
 	    k.column = column;
-      k.add_moves(1);
-      k.add_moves(2);
-      k.add_moves(3);
-      k.add_moves(4);
-      k.add_moves(5);
-      k.add_moves(6);
-      k.add_moves(7);
-      k.add_moves(8);
-      k.add_moves(25);
-      k.add_moves(26);
+	    k.add_moves(1);
+	    k.add_moves(2);
+      	    k.add_moves(3);
+      	    k.add_moves(4);
+      	    k.add_moves(5);
+      	    k.add_moves(6);
+      	    k.add_moves(7);
+      	    k.add_moves(8);
+      	    k.add_moves(25);
+      	    k.add_moves(26);
 	    return k;
     }
 
@@ -469,13 +469,13 @@ class HelloWorld
 	    {
 	        p.add_moves(2);
 	        p.add_moves(6);
-    	    p.add_moves(7);
+    	    	p.add_moves(7);
 	    }
 	    
 	    else{
 	        p.add_moves(1);
 	        p.add_moves(5);
-    	    p.add_moves(8);
+    	    	p.add_moves(8);
 	    }
 	   
 	    return p;
@@ -730,33 +730,33 @@ class HelloWorld
 			    while(p+p2 > 0 && p+p2 < 64)
 			    {
 			        if(off_board(p+ p2, p, move))
-	            {
-		            break;
-	            }
+	            		{
+		            		break;
+	            		}
 				
-				    if(board[p+p2].color == board[p].color)
-				    {
-					    break;
-				    }
+				if(board[p+p2].color == board[p].color)
+				{
+					break;
+				}
 				
 	            
-				    if(board[p2+p].color != color && board[p2+p].contains_move(move) && board[p2+p].type != " ")
-				    {
+				if(board[p2+p].color != color && board[p2+p].contains_move(move) && board[p2+p].type != " ")
+				{
 				    
-					    if(board[p2+p].type == "k" ||( board[p2+p].type == "p"&& (count > 1 || move == 1 || move == 2)))
-					    {
-						    break;
-					    }
+					if(board[p2+p].type == "k" ||( board[p2+p].type == "p"&& (count > 1 || move == 1 || move == 2)))
+					{
+					 	break;
+					}
 					
-					    return true;
+				 	return true;
 					
-				    }
-				    p2 += board[p].allowed_moves(move);
-				    count++;
-				
-			    }
-			    p2 = 0;
-			    count = 1;
+			 	}
+			  	p2 += board[p].allowed_moves(move);
+			  	count++;
+				 
+		  	}
+			p2 = 0;
+			count = 1;
 		    }
 	
 		    int[] knightPos = {6, 10, 15, 17};
@@ -938,13 +938,13 @@ class HelloWorld
 			    break;
 		    }
 		    if(inCheck == color)
-	   	  {
+	   	    {
 			    if(!still_in_check(p, p1, p1+update, color))
 			    {
 			      return false;
-	  	    }
+	  	    	    }
 		
-	      }
+	      	    }
 		
 	    }
 	    
@@ -1007,23 +1007,23 @@ class HelloWorld
 	    List<int> moves = new List<int>();//list of moves for that peice
 
         if(inCheck == color)
-	      {
+	{
 	        if(check_check_mate(color))
 	        {
 	            Console.WriteLine("You are in checkmate "+ color + " game over.");
 	            game = false;
 	            return;
 	        }
-	    }
-		  if(draw(color))
-		  {
-		    Console.WriteLine("No valid moves avalibe, this game is a draw.");
-		    game = false;
-		    return;
-		  }
+	}
+	if(draw(color))
+	{
+		Console.WriteLine("No valid moves avalibe, this game is a draw.");
+		game = false;
+		return;
+	}
 	    
-	    while(!avalible)//grabs the type and id of a peice.
-	    {
+	while(!avalible)//grabs the type and id of a peice.
+	{
 		    output_peices(color);
 		    Console.WriteLine("Please enter the type of peice you would like to select.");
 		    selectType = Console.ReadLine();
@@ -1047,7 +1047,7 @@ class HelloWorld
 		    
 		    avalible = true;
 		    
-	    }
+	}
     }
 
     static bool get_player_move(List<peice> p, List<int> moves, string color)//get the move for that peice
@@ -1056,7 +1056,7 @@ class HelloWorld
 	    bool avalible = false;
 	    while(!avalible)//grabs the valid move of the peice.
 	    {
-	      p[0].output_moves();//maybe change this to output only the valid moves
+	      	    p[0].output_moves();//maybe change this to output only the valid moves
 		    Console.WriteLine("Please select the move you would like to do with the peice, input -1 to select a new peice.");
 		    selectMove = Convert.ToInt32(Console.ReadLine());
 
@@ -1124,8 +1124,8 @@ class HelloWorld
 			    return false;
 		    }
 		        avalible = true;
-       }
-		   return true;
+       		  }
+		  return true;
 		
     }
 
@@ -1136,15 +1136,15 @@ class HelloWorld
 		    Console.WriteLine("Sorry, you cannot move with that peice in that direction, please select an other peice or move.");
 		    return false;
 	    }
-      if(incheck != color)
-      {
+      	    if(incheck != color)
+      	    {
       
-	      if(put_in_check(p, selectMove, color))
-	      {
-		      Console.WriteLine("Sorry, moveing the peice like that will put you in check, please select an other peice or move.");
-		      return false;
-	      }
-     }
+	      	if(put_in_check(p, selectMove, color))
+	      	{
+		      	Console.WriteLine("Sorry, moveing the peice like that will put you in check, please select an other peice or move.");
+		      	return false;
+	      	}
+    	   }
 
 	    int p1 = findI(p);
 	    int update = 0;
@@ -1174,7 +1174,7 @@ class HelloWorld
 	    
 	    if(inCheck == color)
 	    {
-	      Console.WriteLine(color+ "yeah");
+	      	    Console.WriteLine(color+ "yeah");
 		    if(still_in_check(p, p1, p1+update, color))
 		    {
 			    Console.WriteLine("Your king is still in check, please modify your move, select a new move, or select a new peice.");
