@@ -267,7 +267,7 @@ public class knight:peice
         
         return 0;
     }
-    //maybe keep the peices having a direction input, but if its negative, it undoes the move rather then moivng it forward.
+    
     public override void output_moves()
     {
         Console.WriteLine("9.move up 2 and right 1.");
